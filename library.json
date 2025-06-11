@@ -1,0 +1,28 @@
+{
+  "name": "ESP8266 Captive Portal",
+  "version": "1.0.0",
+  "description": "Captive portal for ESP8266.",
+  "keywords": "wifi, captive portal, esp8266",
+  "authors": [
+    {
+      "name": "Lennart Gutjahr",
+      "email": "gutjahrlennart@gmail.com"
+    }
+  ],
+  "license": "CC-BY-NC-4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lennart080/ESP8266-CaptivePortal.git"
+  },
+  "frameworks": "arduino",
+  "platforms": "espressif8266",
+  "dependencies": [
+    "me-no-dev/ESP Async WebServer",
+    "me-no-dev/ESP Async TCP",
+    "earlephilhower/LittleFS"
+  ],
+  "examples": [
+    "examples/BasicUsage/BasicUsage.ino",
+    "examples/GetText/GetText.ino"
+  ]
+}
