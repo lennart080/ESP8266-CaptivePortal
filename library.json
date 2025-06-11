@@ -24,5 +24,9 @@
   "examples": [
     "examples/BasicUsage/BasicUsage.ino",
     "examples/GetText/GetText.ino"
-  ]
+  ],
+  "build": {
+    "srcFilter": "+<src/>",
+    "includeDir": "src"
+  }
 }
