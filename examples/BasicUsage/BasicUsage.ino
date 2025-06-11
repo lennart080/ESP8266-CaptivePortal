@@ -6,8 +6,17 @@
 CaptivePortal portal;
 
 void setup() {
-    portal.initialize("My-Example-AP", "12345678", "index.html");
-    portal.startAP();
+    Serial.begin(115200);
+
+    if (portal.initialize("My-Example-AP", "12345678", "index.html")) {
+        Serial.println(String(static_cast<int>(portal.getLastError())));
+        return;
+    }
+    
+    if (!portal.startAP()) {
+        Serial.println(String(static_cast<int>(portal.getLastError())));
+        return;
+    }
 }
 
 void loop() {

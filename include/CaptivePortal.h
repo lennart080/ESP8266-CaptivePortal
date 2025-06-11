@@ -8,13 +8,31 @@
 #include <LittleFS.h>
 #include <DNSServer.h>
 
+enum class CaptivePortalError {
+    None,
+    AlreadyRunning,
+    FSInitFailed,
+    APStartFailed,
+    DNSServerStartFailed,
+    NotRunning,
+    Unknown,
+    FileNotFound,
+    SoftAPDisconnectFailed,
+    InvalidSSID,
+    InvalidPassword,
+    NotInitialized,
+    AlreadyInitialized
+};
+
 class CaptivePortal {
 public:
-    bool initialize(const char* ssid = "MyAP", const char* password = nullptr, const char* defaultFile = "index.html");
+    bool initialize(const char* ssid, const char* defaultFile = "index.html"); // Open AP
+    bool initialize(const char* ssid, const char* password, const char* defaultFile = "index.html"); // AP with password
     bool stopAP();
     bool startAP();
     void processDNS();
     AsyncWebServer& getServer();
+    CaptivePortalError getLastError() const;
 
 private:
     void registerRoutes(const char* defaultFile);
@@ -22,4 +40,6 @@ private:
     AsyncWebServer server = AsyncWebServer(80);
     DNSServer dnsServer;
     bool apRunning = false;
+    bool initialized = false;
+    CaptivePortalError lastError = CaptivePortalError::None;
 };

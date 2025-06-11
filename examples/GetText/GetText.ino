@@ -6,7 +6,12 @@
 CaptivePortal portal;
 
 void setup() {
-    portal.initialize("My-Example-AP", "12345678", "index.html");
+    Serial.begin(115200);
+
+    if (!portal.initialize("My-Example-AP", "12345678", "index.html")) {
+        Serial.println(String(static_cast<int>(portal.getLastError())));
+        return;
+    }
 
     portal.getServer().on("/api", HTTP_POST, [&](AsyncWebServerRequest *request) {
         if (request->hasParam("text", true)) {
@@ -19,7 +24,10 @@ void setup() {
         }
     });
 
-    portal.startAP();
+    if (!portal.startAP()) {
+        Serial.println(String(static_cast<int>(portal.getLastError())));
+        return;
+    }
 }
 
 void loop() {
