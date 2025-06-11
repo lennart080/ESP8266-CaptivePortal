@@ -17,7 +17,6 @@
   "frameworks": "arduino",
   "platforms": "espressif8266",
   "dependencies": [
-    "me-no-dev/ESPAsyncWebServer",
     "me-no-dev/ESPAsyncTCP",
     "earlephilhower/LittleFS"
   ],
