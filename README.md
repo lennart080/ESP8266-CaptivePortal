@@ -1,4 +1,4 @@
-# WebPortal
+# CaptivePortal
 
 A lightweight captive portal library for ESP8266 (Arduino/PlatformIO).  
 Lets users connect to a temporary WiFi access point, open a web portal, and interact with your device (e.g., submit WiFi credentials or other data).
@@ -18,7 +18,7 @@ Lets users connect to a temporary WiFi access point, open a web portal, and inte
 ## Folder Structure
 
 ```
-lib/WebPortal/
+lib/CaptivePortal/
   README.md
   LICENSE
   library.json
@@ -29,8 +29,8 @@ lib/WebPortal/
     GetText/
       GetText.ino
   src/
-    WebPortal.h
-    WebPortal.cpp
+    CaptivePortal.h
+    CaptivePortal.cpp
 ```
 
 ---
@@ -102,8 +102,8 @@ To serve web files (like `index.html`), upload them to the ESP8266's LittleFS fi
 ### 1. Include and Create
 
 ```cpp
-#include "WebPortal.h"
-WebPortal portal;
+#include "CaptivePortal.h"
+CaptivePortal portal;
 ```
 
 ### 2. Initialize and Start the Portal
@@ -135,18 +135,51 @@ void loop() {
 You can add your own HTTP handlers using the underlying AsyncWebServer:
 
 ```cpp
-portal.getServer().on("/api/wifi", HTTP_POST, [](AsyncWebServerRequest *request) {
-    if (request->hasParam("ssid", true) && request->hasParam("password", true)) {
-        String ssid = request->getParam("ssid", true)->value();
-        String password = request->getParam("password", true)->value();
+portal.getServer().on("/api", HTTP_POST, [](AsyncWebServerRequest *request) {
+    if (request->hasParam("text", true)) {
+        String text = request->getParam("text", true)->value();
         // Save credentials, connect, etc.
-        request->send(200, "text/plain", "Credentials received.");
+        request->send(200, "text/plain", "Text received.");
         portal.stopAP();
     } else {
-        request->send(400, "text/plain", "Missing parameters.");
+        request->send(400, "text/plain", "Missing Text.");
     }
 });
 ```
+
+#### Example `script.js` for Sending Data to `/api`
+
+Here’s a simple example of how you could send data from your frontend to the custom API endpoint using JavaScript:
+
+```js
+// Example script.js
+function sendText() {
+    const text = document.getElementById('textInput').value;
+    fetch('/api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'text=' + encodeURIComponent(text)
+    })
+    .then(response => response.text())
+    .then(data => {
+        alert('Server response: ' + data);
+    })
+    .catch(error => {
+        alert('Error: ' + error);
+    });
+}
+```
+
+And in your `index.html`:
+
+```html
+<input id="textInput" type="text" placeholder="Enter text">
+<button onclick="sendText()">Send</button>
+<script src="script.js"></script>
+```
+
+- This example sends the value from an input field to your `/api` endpoint using a POST request.
+- Adjust the parameter name and logic as needed for your use case.
 
 ### 5. Serving the Web Interface
 
@@ -161,8 +194,8 @@ portal.getServer().on("/api/wifi", HTTP_POST, [](AsyncWebServerRequest *request)
 **Basic usage:**
 
 ```cpp
-#include "WebPortal.h"
-WebPortal portal;
+#include "CaptivePortal.h"
+CaptivePortal portal;
 
 void setup() {
     portal.initialize("My-Example-AP", "12345678", "index.html");
