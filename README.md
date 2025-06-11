@@ -61,7 +61,12 @@ Add this library to your `platformio.ini`:
 ```
 lib_deps =
     https://github.com/lennart080/ESP8266-CaptivePortal.git
+    # Optional: Only add the following if PlatformIO cannot find ESPAsyncWebServer automatically
+    me-no-dev/ESPAsyncWebServer
 ```
+> **Note:**  
+> The `me-no-dev/ESPAsyncWebServer` dependency is optional and should only be added if PlatformIO fails to resolve it automatically and you encounter an error about a missing library.
+
 Or install via the PlatformIO Library Manager.
 
 ### Arduino IDE

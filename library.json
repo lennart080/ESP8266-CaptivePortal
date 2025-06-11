@@ -18,7 +18,8 @@
   "platforms": "espressif8266",
   "dependencies": [
     "me-no-dev/ESPAsyncTCP",
-    "earlephilhower/LittleFS"
+    "earlephilhower/LittleFS",
+    "me-no-dev/ESPAsyncWebServer"
   ],
   "examples": [
     "examples/BasicUsage/BasicUsage.ino",
