@@ -2,7 +2,7 @@
 // https://creativecommons.org/licenses/by-nc/4.0/
 // © 2025 Lennart Gutjahr
 
-#include "WebPortal.h"
+#include "CaptivePortal.h"
 
 const byte DNS_PORT = 53;
 

@@ -1,5 +1,5 @@
 {
-  "name": "ESP8266 Captive Portal",
+  "name": "CaptivePortal",
   "version": "1.0.0",
   "description": "Captive portal for ESP8266.",
   "keywords": "wifi, captive portal, esp8266",
@@ -24,9 +24,5 @@
   "examples": [
     "examples/BasicUsage/BasicUsage.ino",
     "examples/GetText/GetText.ino"
-  ],
-  "build": {
-    "srcFilter": "+<src/>",
-    "includeDir": "src"
-  }
+  ]
 }

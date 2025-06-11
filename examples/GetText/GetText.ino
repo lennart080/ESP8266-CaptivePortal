@@ -1,9 +1,9 @@
-#include "WebPortal.h"
 #include <Arduino.h>
+#include "CaptivePortal.h"
 
 // Before running, upload your web files (e.g., index.html) to LittleFS using the LittleFS Data Upload tool.
 
-WebPortal portal;
+CaptivePortal portal;
 
 void setup() {
     portal.initialize("My-Example-AP", "12345678", "index.html");
