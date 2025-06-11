@@ -8,7 +8,7 @@
 #include <LittleFS.h>
 #include <DNSServer.h>
 
-class WebPortal {
+class CaptivePortal {
 public:
     bool initialize(const char* ssid = "MyAP", const char* password = nullptr, const char* defaultFile = "index.html");
     bool stopAP();

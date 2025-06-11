@@ -6,15 +6,15 @@
 
 const byte DNS_PORT = 53;
 
-void WebPortal::processDNS() {
+void CaptivePortal::processDNS() {
     dnsServer.processNextRequest();
 }
 
-AsyncWebServer& WebPortal::getServer() {
+AsyncWebServer& CaptivePortal::getServer() {
     return server;
 }
 
-void WebPortal::registerRoutes(const char* defaultFile) {
+void CaptivePortal::registerRoutes(const char* defaultFile) {
     server.serveStatic("/", LittleFS, "/").setDefaultFile(defaultFile);
 
     server.onNotFound([this](AsyncWebServerRequest *request) {
@@ -42,7 +42,7 @@ void WebPortal::registerRoutes(const char* defaultFile) {
     });
 }
 
-bool WebPortal::startAP() {
+bool CaptivePortal::startAP() {
     if (apRunning) {
         return false;
     }
@@ -56,7 +56,7 @@ bool WebPortal::startAP() {
     return true;
 }
 
-bool WebPortal::initialize(const char* ssid, const char* password, const char* defaultFile) {
+bool CaptivePortal::initialize(const char* ssid, const char* password, const char* defaultFile) {
     if (apRunning) {
         return false;
     }
@@ -83,7 +83,7 @@ bool WebPortal::initialize(const char* ssid, const char* password, const char* d
     return true;
 }
 
-bool WebPortal::stopAP() {
+bool CaptivePortal::stopAP() {
     if (apRunning) {
         server.end();
         WiFi.softAPdisconnect(true);
