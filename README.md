@@ -44,10 +44,14 @@ lib/CaptivePortal/
 
 ### Dependencies
 
-- [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer)
-- [ESPAsyncTCP](https://github.com/me-no-dev/ESPAsyncTCP)
-- [LittleFS](https://github.com/earlephilhower/arduino-esp8266littlefs)
-- [DNSServer](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#dns-server)
+- [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer) <br>
+  <sub>Recommended: <strong>^3.6.0</strong></sub>
+- [ESPAsyncTCP](https://github.com/me-no-dev/ESPAsyncTCP) <br>
+  <sub>Recommended: <strong>^2.0.0</strong></sub>
+- [LittleFS](https://github.com/earlephilhower/arduino-esp8266littlefs) <br>
+  <sub>Recommended: <strong>^2.11.0</strong></sub>
+- [DNSServer](https://arduino-esp8266.readthedocs.io/en/latest/libraries.html#dns-server) <br>
+  <sub>Included with ESP8266 Arduino core</sub>
 
 Install via PlatformIO `lib_deps` or Arduino Library Manager.
 
