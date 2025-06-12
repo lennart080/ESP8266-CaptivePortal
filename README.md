@@ -232,17 +232,17 @@ And in your `index.html`:
 
 ## License
 
-This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 License.
+This project is licensed under the Apache 2.0 License.
 
-You may use, share, and modify it for non-commercial purposes, as long as you give credit to:
+You may use, share and modify it, as long as you give credit to:
 
 **Lennart Gutjahr (2025)** — Original author  
 **gutjahrlennart@gmail.com** — Email
 
-License details: https://creativecommons.org/licenses/by-nc/4.0/
+License details: [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 
 ---
 
 ## Credits
 
-- Based on [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer) and [LittleFS](https://github.com/earlephilhower/arduino-esp8266littlefs).
+Based on [ESPAsyncWebServer](https://github.com/me-no-dev/ESPAsyncWebServer) and [LittleFS](https://github.com/earlephilhower/arduino-esp8266littlefs).
