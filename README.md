@@ -1,4 +1,7 @@
 # CaptivePortal
+[![License](https://img.shields.io/github/license/lennart080/ESP8266-CaptivePortal?color=blue)](https://github.com/lennart080/ESP8266-CaptivePortal/blob/main/LICENSE)
+[![PlatformIO Registry](https://badgen.net/badge/PlatformIO/Available/green?icon=platformio)](https://registry.platformio.org/libraries/lennart080/ESP8266-CaptivePortal)
+[![GitHub Release](https://img.shields.io/github/v/release/lennart080/ESP8266-CaptivePortal)](https://github.com/lennart080/ESP8266-CaptivePortal/releases)
 
 A lightweight captive portal library for ESP8266 (Arduino/PlatformIO).  
 Lets users connect to a temporary WiFi access point, open a web portal, and interact with your device (e.g., submit WiFi credentials or other data).
