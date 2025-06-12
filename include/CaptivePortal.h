@@ -26,8 +26,8 @@ enum class CaptivePortalError {
 
 class CaptivePortal {
 public:
-    bool initialize(const char* ssid, const char* defaultFile = "index.html"); // Open AP
-    bool initialize(const char* ssid, const char* password, const char* defaultFile = "index.html"); // AP with password
+    bool initialize(const char* ssid, const char* defaultFile = "index.html");
+    bool initialize(const char* ssid, const char* password, const char* defaultFile = "index.html");
     bool stopAP();
     bool startAP();
     void processDNS();
@@ -35,7 +35,7 @@ public:
     CaptivePortalError getLastError() const;
 
 private:
-    void registerRoutes(const char* defaultFile);
+    void registerRoutes();
 
     AsyncWebServer server = AsyncWebServer(80);
     DNSServer dnsServer;
