@@ -112,16 +112,31 @@ CaptivePortal portal;
 
 ### 2. Initialize and Start the Portal
 
-Call `initialize()` in `setup()` to configure the AP and web server, then call `startAP()` to start the portal.
+You can initialize the portal as an open AP (no password):
 
 ```cpp
-void setup() {
-    portal.initialize("My-Example-AP", "12345678", "index.html");
-    portal.startAP();
+if (!portal.initializeOpen("My-Example-AP", "index.html")) {
+    Serial.println("Init failed: " + portal.getLastErrorString());
 }
 ```
-- The password must be at least 8 characters for WPA2 AP mode.
+
+Or as a password-protected AP:
+
+```cpp
+if (!portal.initialize("My-Example-AP", "12345678", "index.html")) {
+    Serial.println("Init failed: " + portal.getLastErrorString());
+}
+```
+- The password must be 8–63 characters for WPA2 AP mode.
 - The third argument is the default file to serve (e.g., `"index.html"` from LittleFS).
+
+Start the portal:
+
+```cpp
+if (!portal.startAP()) {
+    Serial.println("Start failed: " + portal.getLastErrorString());
+}
+```
 
 ### 3. Main Loop
 
@@ -156,7 +171,6 @@ portal.getServer().on("/api", HTTP_POST, [](AsyncWebServerRequest *request) {
 Here’s a simple example of how you could send data from your frontend to the custom API endpoint using JavaScript:
 
 ```js
-// Example script.js
 function sendText() {
     const text = document.getElementById('textInput').value;
     fetch('/api', {
@@ -189,61 +203,30 @@ And in your `index.html`:
 
 - Place your `index.html`, `style.css`, and `script.js` in the device's LittleFS filesystem.
 - The portal will serve these files automatically at `/`.
-- **Note:** In your `script.js`, you are responsible for writing the JavaScript code to interact with your custom REST API endpoints (e.g., using `fetch` or `XMLHttpRequest` to POST data to `/api`). The library does not generate frontend code for you.
 
 ---
 
-## Example
+## Troubleshooting
 
-**Basic usage:**
-
-```cpp
-#include "CaptivePortal.h"
-CaptivePortal portal;
-
-void setup() {
-    portal.initialize("My-Example-AP", "12345678", "index.html");
-    portal.startAP();
-}
-
-void loop() {
-    portal.processDNS();
-    delay(100);
-}
-```
-
-See [`examples/BasicUsage/BasicUsage.ino`](examples/BasicUsage/BasicUsage.ino) and [`examples/GetText/GetText.ino`](examples/GetText/GetText.ino) for more.
+- **LittleFS mount failed:** Ensure you have uploaded files to LittleFS and the filesystem is formatted.
+- **File not found:** Make sure your default file (e.g., `index.html`) exists in LittleFS.
+- **Invalid SSID/Password:** SSID must be 1–32 chars; password must be 8–63 chars or empty for open AP.
+- **AP won't start:** Check for conflicting WiFi modes or hardware issues.
 
 ---
 
 ## API Reference
 
-| Method                                      | Description                                      |
-|----------------------------------------------|--------------------------------------------------|
-| `bool initialize(ssid, password, defaultFile)` | Configure AP, DNS, and web server.               |
-| `bool startAP()`                             | Start the AP and web server.                     |
-| `bool stopAP()`                              | Stop the AP and web server.                      |
-| `void processDNS()`                          | Handle DNS requests (call in loop).              |
-| `AsyncWebServer& getServer()`                | Access the underlying AsyncWebServer.            |
-
-**Note:**  
-- There is no built-in credential storage or WiFi connection logic; you handle this via your own API endpoints and handlers.
-- The portal does not automatically close; call `stopAP()` when you want to shut it down.
-
----
-
-## Customization
-
-- **Static files:** Place your web assets in LittleFS (`/data` folder for PlatformIO).
-- **Routes:** Add custom HTTP handlers using `portal.getServer().on(...)` before calling `startAP()`.
-- **Captive portal detection:** Handles `/generate_204`, `/ncsi.txt`, `/fwlink`, `/hotspot-detect.html`, and `/captive.apple.com` for compatibility.
-
----
-
-## Notes
-
-- All DNS queries are redirected to the ESP, ensuring captive portal detection on most devices.
-- The portal will only close after you call `stopAP()`.
+| Method                                         | Description                                      |
+|------------------------------------------------|--------------------------------------------------|
+| `bool initializeOpen(ssid, defaultFile)`       | Open AP, no password.                            |
+| `bool initialize(ssid, password, defaultFile)`  | WPA2 AP, with password.                          |
+| `bool startAP()`                               | Start the AP and web server.                     |
+| `bool stopAP()`                                | Stop the AP and web server.                      |
+| `void processDNS()`                            | Handle DNS requests (call in loop).              |
+| `AsyncWebServer& getServer()`                  | Access the underlying AsyncWebServer.            |
+| `CaptivePortalError getLastError() const`      | Get the last error code.                         |
+| `String getLastErrorString() const`            | Get a string describing the last error.          |
 
 ---
 
