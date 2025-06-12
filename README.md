@@ -18,26 +18,6 @@ Lets users connect to a temporary WiFi access point, open a web portal, and inte
 
 ---
 
-## Folder Structure
-
-```
-lib/CaptivePortal/
-  README.md
-  LICENSE
-  library.json
-  library.properties
-  examples/
-    BasicUsage/
-      BasicUsage.ino
-    GetText/
-      GetText.ino
-  src/
-    CaptivePortal.h
-    CaptivePortal.cpp
-```
-
----
-
 ## Getting Started
 
 ### Hardware Requirements
