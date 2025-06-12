@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "CaptivePortal.h"
 
-// Example: Minimal captive portal usage.
+// Example: Captive portal with a shutdown endpoint.
 // Before running, upload your web files (e.g., index.html) to LittleFS.
 
 CaptivePortal portal;
@@ -9,12 +9,20 @@ CaptivePortal portal;
 void setup() {
     Serial.begin(115200);
 
-    // Initialize the portal with SSID, password, and default file.
-    if (!portal.initialize("My-Example-AP", "12345678", "index.html")) {
+    // Initialize the portal.
+    if (!portal.initialize("Advanced-Portal", "87654321", "index.html")) {
         Serial.println("Init error: " + portal.getLastErrorString());
         return;
     }
-    
+
+    // Custom POST endpoint: /shutdown
+    portal.getServer().on("/shutdown", HTTP_POST, [&](AsyncWebServerRequest *request) {
+        if (!portal.stopAP()) {
+            Serial.println("Stop AP error: " + portal.getLastErrorString());
+            request->send(500, "text/plain", "Portal stop error: " + portal.getLastErrorString());
+        }
+    });
+
     // Start the access point.
     if (!portal.startAP()) {
         Serial.println("Start AP error: " + portal.getLastErrorString());

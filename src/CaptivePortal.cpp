@@ -75,6 +75,18 @@ CaptivePortalError CaptivePortal::getLastError() const {
 }
 
 /**
+ * @brief Get a string representation of the last error.
+ * 
+ * @return A string describing the last error.
+ * 
+ * This method provides a human-readable description of the last error that occurred.
+ * It can be useful for debugging or logging purposes.
+ */
+String CaptivePortal::getLastErrorString() const {
+    return String(static_cast<int>(lastError));
+}
+
+/**
  * @brief Start the access point if it is initialized but not running.
  * 
  * @return true if the AP was started successfully, false otherwise.

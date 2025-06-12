@@ -33,6 +33,7 @@ public:
     void processDNS();
     AsyncWebServer& getServer();
     CaptivePortalError getLastError() const;
+    String getLastErrorString() const;
 
 private:
     void registerRoutes();
