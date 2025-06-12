@@ -3,6 +3,7 @@
 
 // Example: Custom login page with POST handler.
 // Before running, upload your web files (e.g., login.html) to LittleFS.
+// script.js example is provided in comments at the Bottom.
 
 CaptivePortal portal;
 
@@ -45,3 +46,25 @@ void loop() {
     portal.processDNS();
     delay(100);
 }
+
+/*
+Example script.js/login.html for interacting with /login endpoint:
+
+// Copy and include this in your script.js file
+function login() {
+    fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'username=' + encodeURIComponent(document.getElementById('user').value) +
+              '&password=' + encodeURIComponent(document.getElementById('pass').value)
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(err => alert('Error: ' + err));
+}
+
+// Example HTML:
+// <input id="user" type="text" placeholder="Username">
+// <input id="pass" type="password" placeholder="Password">
+// <button onclick="login()">Login</button>
+*/

@@ -3,6 +3,7 @@
 
 // Example: Custom API handler that receives text and stops the portal.
 // Before running, upload your web files (e.g., index.html) to LittleFS.
+// script.js example is provided in comments at the Bottom.
 
 CaptivePortal portal;
 
@@ -41,3 +42,23 @@ void loop() {
     portal.processDNS();
     delay(100);
 }
+
+/*
+Example script.js/index.html for interacting with /api endpoint:
+
+// Copy and include this in your script.js file
+function sendText() {
+    fetch('/api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'text=' + encodeURIComponent(document.getElementById('myText').value)
+    })
+    .then(response => response.text())
+    .then(data => alert(data))
+    .catch(err => alert('Error: ' + err));
+}
+
+// Example HTML:
+// <input id="myText" type="text" placeholder="Enter text">
+// <button onclick="sendText()">Send</button>
+*/

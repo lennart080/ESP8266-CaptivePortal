@@ -27,3 +27,20 @@ void loop() {
     portal.processDNS();
     delay(100);
 }
+
+/*
+//Example index.html for basic captive portal usage:
+// Copy and include this in your index.html file
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Captive Portal Example</title>
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Welcome to the Captive Portal</h1>
+    <p>This is a basic example of a captive portal.</p>
+</body>
+</html>
+*/
