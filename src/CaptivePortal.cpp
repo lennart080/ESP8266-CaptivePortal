@@ -122,7 +122,7 @@ bool CaptivePortal::startAP() {
  * It sets up the access point without a password and prepares the DNS server to redirect requests.
  * The default file is the HTML file that will be served when a device connects to the captive portal, it should exist in the LittleFS filesystem.
  */
-bool CaptivePortal::initialize(const char* ssid, const char* defaultFile) {
+bool CaptivePortal::initializeOpen(const char* ssid, const char* defaultFile) {
     return initialize(ssid, nullptr, defaultFile);
 }
 

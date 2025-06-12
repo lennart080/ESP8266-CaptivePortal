@@ -26,7 +26,7 @@ enum class CaptivePortalError {
 
 class CaptivePortal {
 public:
-    bool initialize(const char* ssid, const char* defaultFile = "index.html");
+    bool initializeOpen(const char* ssid, const char* defaultFile = "index.html");
     bool initialize(const char* ssid, const char* password, const char* defaultFile = "index.html");
     bool stopAP();
     bool startAP();
