@@ -1,5 +1,6 @@
-// Licensed under CC BY-NC 4.0
-// https://creativecommons.org/licenses/by-nc/4.0/
+// Licensed under Apache License, Version 2.0
+// SPDX-License-Identifier: Apache-2.0
+// http://www.apache.org/licenses/LICENSE-2.0
 // © 2025 Lennart Gutjahr
 
 #pragma once
@@ -30,7 +31,7 @@ public:
     bool initialize(const char* ssid, const char* password, const char* defaultFile = "index.html");
     bool stopAP();
     bool startAP();
-    void processDNS();
+    bool processDNS();
     AsyncWebServer& getServer();
     CaptivePortalError getLastError() const;
     String getLastErrorString() const;

@@ -1,5 +1,6 @@
-// Licensed under CC BY-NC 4.0
-// https://creativecommons.org/licenses/by-nc/4.0/
+// Licensed under Apache License, Version 2.0
+// SPDX-License-Identifier: Apache-2.0
+// http://www.apache.org/licenses/LICENSE-2.0
 // © 2025 Lennart Gutjahr
 
 #include "CaptivePortal.h"
@@ -12,8 +13,18 @@ const byte DNS_PORT = 53;
  * This method processes incoming DNS requests and redirects them to the captive portal's IP address.
  * It should be called frequently to ensure that devices can resolve the captive portal's hostname.
  */
-void CaptivePortal::processDNS() {
+bool CaptivePortal::processDNS() {
+    if (!initialized) {
+        lastError = CaptivePortalError::NotInitialized;
+        return false;
+    }
+    if (!apRunning) {
+        lastError = CaptivePortalError::NotRunning;
+        return false;
+    }
+    lastError = CaptivePortalError::None;
     dnsServer.processNextRequest();
+    return true;
 }
 
 /**
@@ -25,6 +36,11 @@ void CaptivePortal::processDNS() {
  * to add custom routes or handlers beyond the captive portal's default functionality.
  */
 AsyncWebServer& CaptivePortal::getServer() {
+    if (!initialized) {
+        lastError = CaptivePortalError::NotInitialized;
+        return server;
+    }
+    lastError = CaptivePortalError::None;
     return server;
 }
 

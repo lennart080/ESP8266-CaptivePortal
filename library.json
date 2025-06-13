@@ -1,6 +1,6 @@
 {
   "name": "CaptivePortal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Captive portal for ESP8266.",
   "keywords": "wifi, captive portal, esp8266",
   "authors": [
@@ -23,6 +23,8 @@
   ],
   "examples": [
     "examples/BasicUsage/BasicUsage.ino",
-    "examples/GetText/GetText.ino"
+    "examples/GetText/GetText.ino",
+    "examples/LoginPage/LoginPage.ino",
+    "examples/ShutdownEndpoint/ShutdownEndpoint.ino"
   ]
 }
