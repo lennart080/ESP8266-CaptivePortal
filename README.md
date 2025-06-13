@@ -18,6 +18,13 @@ Lets users connect to a temporary WiFi access point, open a web portal, and inte
 
 ---
 
+## Example Project
+
+Looking for a ready-to-use example?  
+Check out the [ESP8266-CaptivePortal-ExampleProject](https://github.com/lennart080/ESP8266-CaptivePortal-ExampleProject).
+
+---
+
 ## Getting Started
 
 ### Hardware Requirements
