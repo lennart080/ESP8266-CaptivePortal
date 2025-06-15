@@ -22,13 +22,14 @@ enum class CaptivePortalError {
     InvalidSSID,
     InvalidPassword,
     NotInitialized,
-    AlreadyInitialized
+    AlreadyInitialized,
+    InvalidWiFiMode
 };
 
 class CaptivePortal {
 public:
-    bool initializeOpen(const char* ssid, const char* defaultFile = "index.html");
-    bool initialize(const char* ssid, const char* password, const char* defaultFile = "index.html");
+    bool initializeOpen(const char* ssid, const char* defaultFile = "index.html", WiFiMode_t mode = WIFI_AP);
+    bool initialize(const char* ssid, const char* password, const char* defaultFile = "index.html", WiFiMode_t mode = WIFI_AP);
     bool stopAP();
     bool startAP();
     bool processDNS();

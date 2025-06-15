@@ -132,14 +132,15 @@ bool CaptivePortal::startAP() {
  * 
  * @param ssid The SSID for the access point.
  * @param defaultFile The default file to serve (e.g., "index.html").
+ * @param mode The WiFi mode to use (default is WIFI_AP).
  * @return true if initialization succeeded, false otherwise.
  * 
  * This method initializes the captive portal with the specified SSID and default file.
  * It sets up the access point without a password and prepares the DNS server to redirect requests.
  * The default file is the HTML file that will be served when a device connects to the captive portal, it should exist in the LittleFS filesystem.
  */
-bool CaptivePortal::initializeOpen(const char* ssid, const char* defaultFile) {
-    return initialize(ssid, nullptr, defaultFile);
+bool CaptivePortal::initializeOpen(const char* ssid, const char* defaultFile, WiFiMode_t mode = WIFI_AP) {
+    return initialize(ssid, nullptr, defaultFile, mode);
 }
 
 /**
@@ -148,13 +149,14 @@ bool CaptivePortal::initializeOpen(const char* ssid, const char* defaultFile) {
  * @param ssid The SSID for the access point.
  * @param password The password for the access point.
  * @param defaultFile The default file to serve (e.g., "index.html").
+ * @param mode The WiFi mode to use (default is WIFI_AP).
  * @return true if initialization succeeded, false otherwise.
  * 
  * This method initializes the captive portal with the specified SSID, password, and default file.
  * It sets up the access point with the given SSID and password and prepares the DNS server to redirect requests.
  * The default file is the HTML file that will be served when a device connects to the captive portal, it should exist in the LittleFS filesystem.
  */
-bool CaptivePortal::initialize(const char* ssid, const char* password, const char* defaultFile) {
+bool CaptivePortal::initialize(const char* ssid, const char* password, const char* defaultFile, WiFiMode_t mode = WIFI_AP) {
 
     if (!ssid || strlen(ssid) == 0 || strlen(ssid) > 32) {
         lastError = CaptivePortalError::InvalidSSID; 
@@ -190,7 +192,12 @@ bool CaptivePortal::initialize(const char* ssid, const char* password, const cha
         return false;
     }
 
-    WiFi.mode(WIFI_AP);
+    if (mode != WIFI_AP && mode != WIFI_AP_STA) {
+        lastError = CaptivePortalError::InvalidWiFiMode;
+        LittleFS.end();
+        return false;
+    }
+    WiFi.mode(mode);
 
     bool apResult;
     if (password) {
