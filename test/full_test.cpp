@@ -41,6 +41,18 @@ void test_invalid_password_too_long() {
     TEST_ASSERT_EQUAL(CaptivePortalError::InvalidPassword, portal.getLastError());
 }
 
+// Test: Wrong WiFi mode
+void test_wrong_WiFi_mode() {
+    CaptivePortal portal;
+    // Attempt to initialize with an invalid WiFi mode
+    TEST_ASSERT_FALSE(portal.initialize("TestAP", "12345678", "index.html", static_cast<WiFiMode_t>(4))); // Invalid mode
+    TEST_ASSERT_EQUAL(CaptivePortalError::InvalidWiFiMode, portal.getLastError());
+    // Attempt to initialize with a valid mode
+    TEST_ASSERT_TRUE(portal.initialize("TestAP", "12345678", "index.html", WIFI_AP)); // Valid mode
+    TEST_ASSERT_EQUAL(CaptivePortalError::None, portal.getLastError());
+    portal.stopAP(); // Clean up
+}
+
 // Test: File not found
 void test_file_not_found() {
     CaptivePortal portal;
@@ -114,6 +126,7 @@ void setup() {
     RUN_TEST(test_invalid_ssid_too_long);
     RUN_TEST(test_invalid_password_too_short);
     RUN_TEST(test_invalid_password_too_long);
+    RUN_TEST(test_wrong_WiFi_mode);
     RUN_TEST(test_file_not_found);
     RUN_TEST(test_already_running);
     RUN_TEST(test_not_initialized);
