@@ -1,6 +1,6 @@
 {
   "name": "CaptivePortal",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Captive portal for ESP8266.",
   "keywords": "wifi, captive portal, esp8266",
   "authors": [

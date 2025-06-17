@@ -23,17 +23,19 @@ enum class CaptivePortalError {
     InvalidPassword,
     NotInitialized,
     AlreadyInitialized,
-    InvalidWiFiMode
+    InvalidWiFiMode,
+    WebSocketNotInitialized
 };
 
 class CaptivePortal {
 public:
-    bool initializeOpen(const char* ssid, const char* defaultFile = "index.html", WiFiMode_t mode = WIFI_AP);
-    bool initialize(const char* ssid, const char* password, const char* defaultFile = "index.html", WiFiMode_t mode = WIFI_AP);
+    bool initializeOpen(const char* ssid, const char* defaultFile = "index.html", WiFiMode_t mode = WIFI_AP, bool addWebSocket = false);
+    bool initialize(const char* ssid, const char* password, const char* defaultFile = "index.html", WiFiMode_t mode = WIFI_AP, bool addWebSocket = false);
     bool stopAP();
     bool startAP();
     bool processDNS();
     AsyncWebServer& getServer();
+    AsyncWebSocket& getWebSocket();
     CaptivePortalError getLastError() const;
     String getLastErrorString() const;
 
@@ -42,6 +44,7 @@ private:
 
     AsyncWebServer server = AsyncWebServer(80);
     DNSServer dnsServer;
+    AsyncWebSocket* ws = nullptr;
     bool apRunning = false;
     bool initialized = false;
     CaptivePortalError lastError = CaptivePortalError::None;

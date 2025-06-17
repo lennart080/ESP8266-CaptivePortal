@@ -139,8 +139,8 @@ bool CaptivePortal::startAP() {
  * It sets up the access point without a password and prepares the DNS server to redirect requests.
  * The default file is the HTML file that will be served when a device connects to the captive portal, it should exist in the LittleFS filesystem.
  */
-bool CaptivePortal::initializeOpen(const char* ssid, const char* defaultFile, WiFiMode_t mode = WIFI_AP) {
-    return initialize(ssid, nullptr, defaultFile, mode);
+bool CaptivePortal::initializeOpen(const char* ssid, const char* defaultFile, WiFiMode_t mode, bool addWebSocket) {
+    return initialize(ssid, nullptr, defaultFile, mode, addWebSocket);
 }
 
 /**
@@ -156,7 +156,7 @@ bool CaptivePortal::initializeOpen(const char* ssid, const char* defaultFile, Wi
  * It sets up the access point with the given SSID and password and prepares the DNS server to redirect requests.
  * The default file is the HTML file that will be served when a device connects to the captive portal, it should exist in the LittleFS filesystem.
  */
-bool CaptivePortal::initialize(const char* ssid, const char* password, const char* defaultFile, WiFiMode_t mode = WIFI_AP) {
+bool CaptivePortal::initialize(const char* ssid, const char* password, const char* defaultFile, WiFiMode_t mode, bool addWebSocket) {
 
     if (!ssid || strlen(ssid) == 0 || strlen(ssid) > 32) {
         lastError = CaptivePortalError::InvalidSSID; 
@@ -224,6 +224,11 @@ bool CaptivePortal::initialize(const char* ssid, const char* password, const cha
 
     registerRoutes();
 
+    if (addWebSocket) {
+        ws = new AsyncWebSocket("/ws");
+        server.addHandler(ws);
+    }
+
     server.begin();
     initialized = true;
     lastError = CaptivePortalError::None;
@@ -250,8 +255,33 @@ bool CaptivePortal::stopAP() {
         return false;
     }
     LittleFS.end();
+
+    if (ws != nullptr) {
+        delete ws;
+        ws = nullptr;
+    }
+
     apRunning = false;
     initialized = false;
     lastError = CaptivePortalError::None;
     return true;
+}
+
+/**
+ * @brief Get a reference to the internal AsyncWebSocket.
+ * 
+ * @return Reference to the AsyncWebSocket instance.
+ * 
+ * This method allows you to access the internal WebSocket instance
+ * to add custom handlers or manage WebSocket connections. If the WebSocket is not initialized or is null, it returns a dummy instance
+ * and sets the last error to `WebSocketNotInitialized`. 
+ */
+AsyncWebSocket& CaptivePortal::getWebSocket() {
+    if (!initialized || ws == nullptr) {
+        lastError = CaptivePortalError::WebSocketNotInitialized;
+        static AsyncWebSocket dummy("/dummy");
+        return dummy;
+    }
+    lastError = CaptivePortalError::None;
+    return *ws;
 }
