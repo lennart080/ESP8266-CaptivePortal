@@ -41,7 +41,7 @@ Check out the [ESP8266-CaptivePortal-ExampleProject](https://github.com/lennart0
 Add this library to your `platformio.ini`:
 ```
 lib_deps =
-    https://github.com/lennart080/ESP8266-CaptivePortal.git
+    lennart080/CaptivePortal
     # Optional: Only add the following if PlatformIO cannot find ESPAsyncWebServer automatically
     me-no-dev/ESPAsyncWebServer
 ```
