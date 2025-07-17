@@ -99,7 +99,8 @@ CaptivePortalError CaptivePortal::getLastError() const {
  * It can be useful for debugging or logging purposes.
  */
 String CaptivePortal::getLastErrorString() const {
-    return String(static_cast<int>(lastError));
+    auto it = CaptivePortalErrorStrings.find(lastError);
+    return (it != CaptivePortalErrorStrings.end()) ? it->second : "No string description available for this error code";
 }
 
 /**
